@@ -9,12 +9,19 @@
   font-family: "Arial Narrow", "Franklin Gothic Medium", Arial, sans-serif;
 }
 body {
+  padding: 0;
+  margin: 0;
   display: block;
 }
 
 header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 10%;
   background-color: var(--var-banner);
   text-align: center;
+  padding-top: 20px;
 }
 
 main {
@@ -44,8 +51,9 @@ main {
   padding: 2px;
 }
 
+h1,
 h2 {
-  font: var(--var-big-text) 32px;
+  color: var(--var-big-text);
 }
 h3 {
   font: var(--var-big-text) 28px;

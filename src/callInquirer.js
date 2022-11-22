@@ -1,3 +1,6 @@
+const inquirer = require("inquirer");
+let newEmployee;
+
 const questions = [
   {
     name: "empName",
