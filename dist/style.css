@@ -75,6 +75,7 @@ h3 {
 }
 
 #card-field {
+  border: solid 1px;
   justify-content: center;
   margin: 2px;
   padding: 3px;
