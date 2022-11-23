@@ -11,42 +11,47 @@
 body {
   padding: 0;
   margin: 0;
-  display: block;
 }
 
 header {
-  position: absolute;
-  top: 0;
   width: 100%;
-  height: 10%;
   background-color: var(--var-banner);
   text-align: center;
   padding-top: 20px;
+  margin-bottom: 5px;
 }
 
 main {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .card {
+  margin: 15px;
   width: 300px;
   background-color: var(--var-background);
   box-shadow: 0 4px 8px 0 var(--var-shadow), 0 6px 18px 0 var(--var-shadow);
 }
 
 #card-header {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   background-color: var(--var-card-header);
-  width: 100%;
+  width: 300px;
   height: 125px;
-  padding: 5px;
 }
 
 #name-block,
 #title-block {
-  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 275px;
   height: 39px;
   padding: 2px;
 }
@@ -56,26 +61,32 @@ h2 {
   color: var(--var-big-text);
 }
 h3 {
-  font: var(--var-big-text) 28px;
+  color: var(--var-big-text);
+  font-size: 24px;
 }
 
 #card-main {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   height: 180px;
   width: 100%;
 }
 
 #card-field {
+  justify-content: center;
+  margin: 2px;
+  padding: 3px;
   background-color: var(--var-big-text);
   height: 40px;
-  width: 85%;
+  width: 75%;
 }
 
 h4 {
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: lighter;
+  margin-left: 5px;
 }
 
 a {

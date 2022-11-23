@@ -1,11 +1,12 @@
 const inquirer = require("inquirer");
-let newEmployee;
+const Manager = require("../lib/manager.js");
+let newManager;
 
-const questions = [
+const managerQuestions = [
   {
     name: "empName",
     type: "input",
-    message: "Enter the name of employee.",
+    message: "Enter the manager's name.",
   },
   {
     name: "empID",
@@ -17,11 +18,16 @@ const questions = [
     type: "input",
     message: "Enter email address for employee.",
   },
+  {
+    name: "officeNumber",
+    type: "input",
+    message: "Enter the office's phone number.",
+  },
 ];
 
-inquirer.prompt(questions).then(
-  ({ empName, empID, empEmail }) => {
-    newEmployee = new Employee(empName, empID, empEmail);
+inquirer.prompt(managerQuestions).then(
+  ({ empName, empID, empEmail, officeNumber }) => {
+    newManager = new Manager(empName, empID, empEmail, officeNumber);
   },
   (error) => {
     console.log(error);
