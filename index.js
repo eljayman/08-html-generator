@@ -1,9 +1,14 @@
 const inquirer = require("inquirer");
-const Manager = require("./lib/manager.js");
 const fs = require("fs");
+const Manager = require("./lib/manager.js");
+const Intern = require("./lib/intern.js");
+const Engineer = require("./lib/engineer.js");
 let newManager;
+let newEngineer;
+let newIntern;
+let newEngObj;
 
-const managerQuestions = [
+const ManagerQuestions = [
   {
     name: "empName",
     type: "input",
@@ -21,25 +26,128 @@ const managerQuestions = [
   },
   {
     name: "officeNumber",
-    type: "input",
+    type: "number",
     message: "Enter the office's phone number.",
   },
 ];
-
-inquirer.prompt(managerQuestions).then(
-  ({ empName, empID, empEmail, officeNumber }) => {
-    newManager = new Manager(empName, empID, empEmail, officeNumber);
-    const contents = renderHTML();
-    fs.writeFile("./dist/index.html", contents, (error) => {
-      if (error) console.log(error);
-    });
+const teamMembers = [
+  {
+    name: "teamMember",
+    type: "list",
+    message: "Would you like to add another team member?",
+    choices: ["Add Engineer", "Add Intern", "Team is Complete"],
   },
-  (error) => {
-    console.log(error);
-  }
-);
+];
+const EngineerQuestions = [
+  {
+    name: "empName",
+    type: "input",
+    message: "Please enter the engineer's name.",
+  },
+  {
+    name: "empID",
+    type: "number",
+    message: "Please enter the engineer's employee ID.",
+  },
+  {
+    name: "empEmail",
+    type: "input",
+    message: "Please enter an email address for the engineer.",
+  },
+  {
+    name: "gitUser",
+    type: "input",
+    message: "Please enter the github address for the engineer.",
+  },
+];
+const InternQuestions = [
+  {
+    name: "empName",
+    type: "input",
+    message: "Please enter the intern's name.",
+  },
+  {
+    name: "empID",
+    type: "number",
+    message: "Please enter the intern's employee ID.",
+  },
+  {
+    name: "empEmail",
+    type: "input",
+    message: "Please enter an email address for the intern.",
+  },
+  {
+    name: "school",
+    type: "input",
+    message: "Please enter the intern's school.",
+  },
+];
 
-function managerCard() {
+function addManager() {
+  inquirer.prompt(ManagerQuestions).then(
+    ({ empName, empID, empEmail, officeNumber }) => {
+      newManager = new Manager(empName, empID, empEmail, officeNumber);
+
+      addTeamMembers();
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
+function addEngineer() {
+  inquirer.prompt(EngineerQuestions).then(
+    ({ empName, empID, empEmail, gitUser }) => {
+      newEngineer = new Engineer(empName, empID, empEmail, gitUser);
+      addTeamMembers();
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
+
+function addIntern() {
+  inquirer.prompt(InternQuestions).then(
+    ({ empName, empID, empEmail, school }) => {
+      newIntern = new Intern(empName, empID, empEmail, school);
+
+      console.log(newIntern);
+      addTeamMembers();
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
+function addTeamMembers() {
+  inquirer.prompt(teamMembers).then(
+    ({ teamMember }) => {
+      if (teamMember === "Add Engineer") {
+        console.log("Add Engineer");
+        addEngineer();
+      }
+      if (teamMember === "Add Intern") {
+        console.log("Add Intern");
+        addIntern();
+      }
+      if (teamMember === "Team is Complete") {
+        completeTeam();
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
+function completeTeam() {
+  const contents = renderHTML();
+  fs.writeFile("./dist/index.html", contents, (error) => {
+    if (error) console.log(error);
+  });
+}
+
+function ManagerCard() {
   return `
   <div class="card">
   <div id="card-header">
@@ -48,11 +156,41 @@ function managerCard() {
   </div>
   <div id="card-main">
     <div id="card-field"><h4>Employee ID:  ${newManager.empID}</h4></div>
-    <div id="card-field"><h4>Email Address:  ${newManager.empEmail}</h4></div>
+    <div id="card-field"><a href = 'mailto:${newManager.empEmail}'>Email Address:  ${newManager.empEmail}</a></div>
     <div id="card-field"><h4>Office Number:  ${newManager.officeNumber}</h4></div>
   </div>
 </div>
   `;
+}
+function EngineerCard() {
+  return `
+  <div class="card">
+  <div id="card-header">
+    <div id="name-block"><h2>${newEngineer.empName}</h2></div>
+    <div id="title-block"><h3>Engineer</h3></div>
+  </div>
+  <div id="card-main">
+    <div id="card-field"><h4>Employee ID:  ${newEngineer.empID}</h4></div>
+    <div id="card-field"><a href="mailto:${newEngineer.empEmail}">Email Address: ${newEngineer.empEmail}</a></div>
+    <div id="card-field"><a href = "github.com/${newEngineer.gitUser}">github.com/${newEngineer.gitUser}</a></div>
+  </div>
+</div>
+  `;
+}
+function InternCard() {
+  return `
+    <div class="card">
+    <div id="card-header">
+      <div id="name-block"><h2>${newIntern.empName}</h2></div>
+      <div id="title-block"><h3>Intern</h3></div>
+    </div>
+    <div id="card-main">
+      <div id="card-field"><h4>Employee ID:  ${newIntern.empID}</h4></div>
+      <div id="card-field"><a href = 'mailto:  ${newIntern.empEmail}'>Email Address:  ${newIntern.empEmail}</a></div>
+      <div id="card-field"><h4>School:  ${newIntern.school}</h4></div>
+    </div>
+  </div>
+    `;
 }
 function renderHTML() {
   return `
@@ -70,16 +208,14 @@ function renderHTML() {
       <h1>My Team</h1>
     </header>
     <main>
-      ${managerCard(newManager)}
+      ${ManagerCard(newManager)}
+      ${EngineerCard(newEngineer)}
+      ${InternCard(newIntern)}
     </main>
   </body>
 </html>
   `;
 }
-// const fileData = fs.readFile("./lib/manager.json", (err, data) => {
-//   if (err) {
-//     throw new err();
-//   }
-//   const bufDat = JSON.parse(data);
-//   console.log(bufDat);
-// });
+
+addManager();
+
