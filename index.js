@@ -171,7 +171,7 @@ function EngineerCard() {
   <div id="card-main">
     <div id="card-field"><h4>Employee ID:  ${newEngineer.empID}</h4></div>
     <div id="card-field"><a href="mailto:${newEngineer.empEmail}">Email Address: ${newEngineer.empEmail}</a></div>
-    <div id="card-field"><a href = "github.com/${newEngineer.gitUser}">github.com/${newEngineer.gitUser}</a></div>
+    <div id="card-field"><a href = "http://github.com/${newEngineer.gitUser}">github.com/${newEngineer.gitUser}</a></div>
   </div>
 </div>
   `;
