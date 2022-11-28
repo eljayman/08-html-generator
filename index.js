@@ -6,7 +6,6 @@ const Engineer = require("./lib/engineer.js");
 let newManager;
 let newEngineer;
 let newIntern;
-let newEngObj;
 
 const ManagerQuestions = [
   {
@@ -57,7 +56,7 @@ const EngineerQuestions = [
   {
     name: "gitUser",
     type: "input",
-    message: "Please enter the github address for the engineer.",
+    message: "Please enter the github name for the engineer.",
   },
 ];
 const InternQuestions = [
@@ -218,4 +217,3 @@ function renderHTML() {
 }
 
 addManager();
-
